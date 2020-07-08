@@ -1,69 +1,49 @@
+import "../styles/reset.css"
+import "../styles/global.css"
 import React from "react"
-import { Link } from "gatsby"
+import styled from "styled-components"
 
-import { rhythm, scale } from "../utils/typography"
+const Header = styled.header`
+  background-color: var(--base-bg);
+  font-size: 2rem;
+  padding: 1rem 5rem;
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 3rem;
+`
 
-const Layout = ({ location, title, children }) => {
-  const rootPath = `${__PATH_PREFIX__}/`
-  let header
+const PageWrapper = styled.div`
+  margin: auto;
+  max-width: 63rem;
+  padding: 2rem;
+`
 
-  if (location.pathname === rootPath) {
-    header = (
-      <h1
-        style={{
-          ...scale(1.5),
-          marginBottom: rhythm(1.5),
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    )
+const Footer = styled.div`
+  background-color: var(--light-gray);
+  padding: 1rem 5rem;
+  > small {
+    display: block;
+    font-size: var(--text-sm)
   }
+`
+
+const Layout = ({ title, children }) => {
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
-      </footer>
-    </div>
+    <>
+      <Header>{title}</Header>
+      <PageWrapper>
+        <main>{children}</main>
+      </PageWrapper>
+      <Footer>
+        <small>
+          © {new Date().getFullYear()} {title},
+        </small>
+        <small>
+          Built with <a href="https://www.gatsbyjs.org">Gatsby</a> and based on{" "}
+          <a href="https://blog.elementary.io">Elementary Blog</a>
+        </small>
+      </Footer>
+    </>
   )
 }
 

@@ -1,10 +1,19 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm } from "../utils/typography"
+import PostCard from "../components/_parts/PostCard"
+
+import styled from "styled-components"
+
+const Posts = styled.main`
+  display: grid;
+  width: 100%;
+  margin: auto;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+`
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -13,33 +22,14 @@ const BlogIndex = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
-      <Bio />
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <article key={node.fields.slug}>
-            <header>
-              <h3
-                style={{
-                  marginBottom: rhythm(1 / 4),
-                }}
-              >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
-                  {title}
-                </Link>
-              </h3>
-              <small>{node.frontmatter.date}</small>
-            </header>
-            <section>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
-            </section>
-          </article>
-        )
-      })}
+      <Posts>
+        {posts.map(({ node }) => {
+          const { fields, frontmatter } = node;
+          // TODO: remove this after add cover to frontmatter
+          frontmatter.cover = frontmatter.cover ? frontmatter.cover : "/assets/code.png"
+          return <PostCard {...frontmatter} slug={fields.slug}/>
+        })}
+      </Posts>
     </Layout>
   )
 }
