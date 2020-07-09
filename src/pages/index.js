@@ -1,19 +1,10 @@
 import React from "react"
 import { graphql } from "gatsby"
+import { Grid } from "@chakra-ui/core"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import PostCard from "../components/_parts/PostCard"
-
-import styled from "styled-components"
-
-const Posts = styled.main`
-  display: grid;
-  width: 100%;
-  margin: auto;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-`
+import PostCard from "../components/PostCard"
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
@@ -22,14 +13,22 @@ const BlogIndex = ({ data, location }) => {
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
-      <Posts>
-        {posts.map(({ node }) => {
-          const { fields, frontmatter } = node;
-          // TODO: remove this after add cover to frontmatter
-          frontmatter.cover = frontmatter.cover ? frontmatter.cover : "/assets/code.png"
-          return <PostCard {...frontmatter} slug={fields.slug}/>
+      <Grid templateColumns={{ base: "1fr", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }}>
+        {posts.map(({ node }, index) => {
+          const { fields, frontmatter } = node
+          const isFeaturedFirstPost = index === 0
+
+          return (
+            <PostCard
+              key={fields.slug}
+              slug={fields.slug}
+              gridColumn={isFeaturedFirstPost ? { sm: "1 / -1" } : undefined}
+              isFeaturedPost={isFeaturedFirstPost}
+              frontmatter={frontmatter}
+            />
+          )
         })}
-      </Posts>
+      </Grid>
     </Layout>
   )
 }

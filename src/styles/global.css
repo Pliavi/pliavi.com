@@ -20,7 +20,9 @@
   --text-4xl: 2.25rem;
 }
 
+
 body {
   font-family: "Raleway", sans-serif;
   color: var(--base-fg);
+  background-color: #fefefe;
 }

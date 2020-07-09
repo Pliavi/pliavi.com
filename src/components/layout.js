@@ -1,18 +1,25 @@
 import "../styles/reset.css"
 import "../styles/global.css"
 import React from "react"
-import styled from "styled-components"
+import styled from "@emotion/styled"
+import { Box } from "@chakra-ui/core"
 
-const Header = styled.header`
-  background-color: var(--base-bg);
-  font-size: 2rem;
-  padding: 1rem 5rem;
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 3rem;
-`
+const Header = ({ children }) => (
+  <Box
+    as="header"
+    bg="blue.600"
+    color="white"
+    fontSize="4xl"
+    fontWeight="bold"
+    mb={12}
+    px={20}
+    py={4}
+  >
+    {children}
+  </Box>
+)
 
-const PageWrapper = styled.div`
+const PageWrapper = styled(Box)`
   margin: auto;
   max-width: 63rem;
   padding: 2rem;
@@ -23,7 +30,7 @@ const Footer = styled.div`
   padding: 1rem 5rem;
   > small {
     display: block;
-    font-size: var(--text-sm)
+    font-size: var(--text-sm);
   }
 `
 
@@ -31,7 +38,7 @@ const Layout = ({ title, children }) => {
   return (
     <>
       <Header>{title}</Header>
-      <PageWrapper>
+      <PageWrapper color="gray.800">
         <main>{children}</main>
       </PageWrapper>
       <Footer>
